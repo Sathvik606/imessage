@@ -1,0 +1,20 @@
+import express from "express";
+import { 
+    getConversationsForSidebar, 
+    getMessages, 
+    getUsersForSidebar, 
+    sendMessage
+} from "../controllers/message.controller.js";
+import { protectRoute } from "../middleware/auth.middleware.js";
+import { upload } from "../middleware/upload.middleware.js";
+
+const router = express.Router();
+
+router.use(protectRoute) // all routes below require auth, so we protect them at the router level
+
+router.get("/users", getUsersForSidebar)
+router.get("/conversations", getConversationsForSidebar)
+router.get("/:id", getMessages)
+router.post("/send/:id", upload.single("media"), sendMessage)
+
+export default router;
