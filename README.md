@@ -113,4 +113,3 @@ Protected message routes (require Clerk auth via `protectRoute` middleware):
 
 **Contributing**
 - Please open issues or PRs for feature requests or bug fixes. Follow standard Git conventions and add tests for critical changes.
-
