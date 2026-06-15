@@ -6,13 +6,10 @@ export async function protectRoute(req, res, next) {
         const { userId } = getAuth(req);
 
         if (!userId) {
-            console.log("No Clerk user found")
             return res.status(401).json({ message: "Unauthorized" });
         }
 
-        console.log("Clerk ID:", userId);
         const user = await User.findOne({ clerkId: userId });
-        console.log("Found User:", user);
 
         if (!user) {
             console.log("User not synced")
