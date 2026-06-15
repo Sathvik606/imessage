@@ -1,7 +1,7 @@
 import User from "../models/user.model.js";
 import Message from "../models/message.model.js";
 import { hasImageKitConfig, uploadChatMedia } from "../lib/imagekit.js";
-import { getReceiverSocketId } from "../lib/socket.js";
+import { io, getReceiverSocketId } from "../lib/socket.js";
 
 
 export async function getUsersForSidebar(req, res) {
@@ -21,12 +21,12 @@ export async function getConversationsForSidebar(req, res) {
         const loggedInUserId = req.user._id;
         const conversations = await Message.aggregate([
             // 1. Keep only messages I sent or received
-            { $match: { $or: [{ senderId: loggedInUserId }, { recieverId: loggedInUserId }] } },
+            { $match: { $or: [{ senderId: loggedInUserId }, { receiverId: loggedInUserId }] } },
             // 2. Collapse them into one row per chat partner, noting our latest message time.
             {
                 $group: {
                     // The partner is the other person on the message (not me).
-                    _id: { $cond: [{ $eq: ["$senderId", loggedInUserId] }, "$recieverId", "$senderId"] },
+                    _id: { $cond: [{ $eq: ["$senderId", loggedInUserId] }, "$receiverId", "$senderId"] },
                     lastMessageAt: { $max: "$createdAt" },
                 },
             },
@@ -56,8 +56,8 @@ export async function getMessages(req, res) {
         // find messages where I'm the sender and the other user is the receiver, or vice versa
         const messages = await Message.find({
             $or: [
-                { senderId: myId, recieverId: userToChatId },
-                { senderId: userToChatId, recieverId: myId },
+                { senderId: myId, receiverId: userToChatId },
+                { senderId: userToChatId, receiverId: myId },
             ],
         }).sort({ createdAt: 1 }); // oldest to newest
 
