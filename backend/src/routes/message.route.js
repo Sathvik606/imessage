@@ -12,6 +12,7 @@ const router = express.Router();
 
 router.use(protectRoute) // all routes below require auth, so we protect them at the router level
 
+console.log("Message route loaded");
 router.get("/users", getUsersForSidebar)
 router.get("/conversations", getConversationsForSidebar)
 router.get("/:id", getMessages)

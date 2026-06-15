@@ -104,11 +104,11 @@ function ChatSidebar() {
 
         <Tabs.ListContainer className="shrink-0 border-b border-border px-2 pb-2 pt-1">
           <Tabs.List className="w-full gap-0.5">
-            <Tabs.Tab id="chats" className="flex-1 justify-center gap-1.5">
+            <Tabs.Tab id="chats" className="flex-1 justify-center gap-1.5" aria-label="Chats tab">
               <MessageSquareIcon className="size-3.5 opacity-80" aria-hidden />
               Chats
             </Tabs.Tab>
-            <Tabs.Tab id="users" className="flex-1 justify-center gap-1.5">
+            <Tabs.Tab id="users" className="flex-1 justify-center gap-1.5" aria-label="Users tab">
               <UsersIcon className="size-3.5 opacity-80" aria-hidden />
               Users
             </Tabs.Tab>

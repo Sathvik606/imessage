@@ -4,6 +4,7 @@ import { protectRoute } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
+console.log("Auth route loaded");
 // /api/auth/check
 router.get("/check", protectRoute, checkAuth);
 
